@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>QR Generator</title>
+		<style>
+			.container {
+				max-width: 600px;
+				margin: 0 auto;
+				padding: 20px;
+			}
+			#qrcode {
+				margin-top: 20px;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<form id="vehicleForm">
+				<div>
+					<label>Vehicle Number:</label>
+					<input type="text" id="vehicle" required />
+				</div>
+				<div>
+					<label>Phone Number:</label>
+					<input type="tel" id="phone" required />
+				</div>
+				<button type="submit">Next</button>
+			</form>
+			<div id="qrcode"></div>
+		</div>
+		<script>
+			document
+				.getElementById("vehicleForm")
+				.addEventListener("submit", async (e) => {
+					e.preventDefault();
+					const response = await fetch("/generate", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/x-www-form-urlencoded",
+						},
+						body: new URLSearchParams({
+							vehicle: document.getElementById("vehicle").value,
+							phone: document.getElementById("phone").value,
+						}),
+					});
+					const data = await response.json();
+					document.getElementById(
+						"qrcode"
+					).innerHTML = `<img src="${data.qrImage}">`;
+				});
+		</script>
+	</body>
+</html>
