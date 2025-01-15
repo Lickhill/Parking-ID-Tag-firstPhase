@@ -14,7 +14,7 @@ app.post("/generate", async (req, res) => {
 	const { vehicle, phone } = req.body;
 	const data = JSON.stringify({ phone: phone });
 	const baseUrl =
-		"https://your-deployed-website.vercel.app/verify" ||
+		"https://parking-id-tag-second-phase.vercel.app//verify" ||
 		"http://localhost:3001/verify";
 	const qrImage = await qr.toDataURL(
 		`${baseUrl}/${Buffer.from(data).toString("base64")}`
